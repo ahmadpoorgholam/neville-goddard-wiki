@@ -1,52 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8" />
   <title>Neville Goddard Wiki</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Open markdown corpus of Neville Goddard books and lectures — a free public wiki." />
-  <meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1a1814" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f4efe6" id="meta-theme-color" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
   <style>
-    /* Kindle-like reading shell */
     :root {
       --theme-color: #8a6a1f;
       --paper: #f4efe6;
       --ink: #2a241c;
       --muted: #6e6458;
       --chrome: #ebe4d8;
-      --serif: "Palatino Linotype", Palatino, "Book Antiqua", "Iowan Old Style", "New York", Georgia, serif;
+      --rule: color-mix(in srgb, var(--muted) 28%, transparent);
+      --serif: "Palatino Linotype", Palatino, "Book Antiqua", "Iowan Old Style", "New York", Georgia, "Times New Roman", serif;
       --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      --reader-max: 38rem;
-      --reader-pad: clamp(1rem, 4.5vw, 1.75rem);
-      --line: 1.65;
-      --body-size: clamp(1.125rem, 2.8vw + 0.85rem, 1.28rem);
+      --reader-max: 36rem;
+      --reader-pad: clamp(1rem, 4.5vw, 1.85rem);
+      --line: 1.72;
+      --body-size: clamp(1.125rem, 2.6vw + 0.9rem, 1.3rem);
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --theme-color: #d4b45a;
-        --paper: #1a1814;
-        --ink: #e8e0d2;
-        --muted: #a89b88;
-        --chrome: #242018;
-      }
-      .sidebar { background: #141210 !important; border-right-color: #2e2922 !important; }
-      .sidebar ul li a { color: #d8cfc0 !important; }
-      .sidebar ul li.active > a { color: var(--theme-color) !important; }
-      .search input {
-        background: #242018 !important;
-        color: var(--ink) !important;
-        border-color: #3a342c !important;
-      }
-      .markdown-section code,
-      .markdown-section pre {
-        background: #242018 !important;
-      }
-      .markdown-section tr:nth-child(2n) { background: #221e18 !important; }
+    html[data-theme="dark"],
+    html[data-theme="auto"][data-system="dark"] {
+      --theme-color: #d4b45a;
+      --paper: #1a1814;
+      --ink: #e8e0d2;
+      --muted: #a89b88;
+      --chrome: #242018;
+      --rule: color-mix(in srgb, var(--muted) 35%, transparent);
     }
 
     html, body {
@@ -56,72 +42,117 @@
       text-size-adjust: 100%;
       overscroll-behavior-y: contain;
     }
-
     body {
       font-family: var(--serif);
       font-size: var(--body-size);
       line-height: var(--line);
-      letter-spacing: 0.01em;
-      /* Kindle-ish soft rendering */
+      letter-spacing: 0.012em;
       -webkit-font-smoothing: antialiased;
+      hyphens: auto;
+      -webkit-hyphens: auto;
     }
 
-    /* Content column like a Kindle page */
-    .content {
-      padding-top: 0 !important;
-      left: 0 !important;
-    }
+    .content { padding-top: 0 !important; left: 0 !important; }
     .markdown-section {
       max-width: var(--reader-max) !important;
-      padding: calc(1.25rem + env(safe-area-inset-top)) var(--reader-pad) calc(3.5rem + env(safe-area-inset-bottom)) !important;
+      padding: calc(1.35rem + env(safe-area-inset-top)) var(--reader-pad) calc(4rem + env(safe-area-inset-bottom)) !important;
       margin: 0 auto !important;
       color: var(--ink) !important;
+      text-align: left;
     }
-    .markdown-section h1,
-    .markdown-section h2,
-    .markdown-section h3 {
+
+    /* EPUB-style chapter cadence */
+    .markdown-section h1 {
       font-family: var(--serif);
+      font-size: 1.65em;
       font-weight: 600;
+      text-align: center;
+      margin: 1.2em 0 0.85em;
       line-height: 1.25;
-      letter-spacing: 0.02em;
-      color: var(--ink) !important;
-      margin-top: 1.6em;
+      letter-spacing: 0.04em;
     }
-    .markdown-section h1 { font-size: 1.55em; }
-    .markdown-section h2 { font-size: 1.28em; border-bottom: none !important; }
-    .markdown-section p,
+    .markdown-section h1::after {
+      content: "";
+      display: block;
+      width: 3.2rem;
+      height: 1px;
+      background: var(--theme-color);
+      margin: 0.85em auto 0;
+      opacity: 0.75;
+    }
+    .markdown-section h2 {
+      font-size: 1.22em;
+      font-weight: 600;
+      border-bottom: none !important;
+      margin-top: 1.75em;
+      letter-spacing: 0.03em;
+    }
+    .markdown-section h3 {
+      font-size: 1.08em;
+      font-weight: 600;
+      margin-top: 1.4em;
+      color: var(--muted) !important;
+    }
+    .markdown-section p {
+      margin: 0 0 0.95em;
+      text-align: justify;
+      text-justify: inter-word;
+      hanging-punctuation: first allow-end last;
+    }
+    .markdown-section p:first-of-type::first-letter,
+    .markdown-section > p:nth-of-type(1)::first-letter {
+      font-size: 1.15em;
+      font-weight: 600;
+    }
     .markdown-section li {
-      font-size: 1em;
+      margin: 0.35em 0;
       line-height: var(--line);
-      orphans: 3;
-      widows: 3;
     }
-    .markdown-section p { margin: 0.85em 0; }
-    .markdown-section a { color: var(--theme-color) !important; text-decoration: underline; text-underline-offset: 0.15em; }
+    .markdown-section a {
+      color: var(--theme-color) !important;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+      text-decoration-thickness: from-font;
+    }
     .markdown-section blockquote {
       border-left: 3px solid var(--theme-color) !important;
       color: var(--muted) !important;
       background: transparent !important;
       font-style: italic;
-      padding: 0.2em 0 0.2em 1em !important;
+      padding: 0.15em 0 0.15em 1em !important;
+      margin: 1.1em 0;
+    }
+    .markdown-section hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2em auto;
+      width: 40%;
     }
     .markdown-section table {
       display: block;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      font-size: 0.92em;
+      font-size: 0.9em;
+      font-family: var(--sans);
+      text-align: left;
     }
-    .markdown-section code {
+    .markdown-section tr:nth-child(2n) {
+      background: color-mix(in srgb, var(--chrome) 70%, transparent) !important;
+    }
+    .markdown-section code, .markdown-section pre {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.88em;
+      font-size: 0.86em;
+      background: var(--chrome) !important;
+      text-align: left;
+      hyphens: none;
     }
 
-    /* Chrome / sidebar — phone first */
     .sidebar {
       background: var(--chrome) !important;
       padding-top: env(safe-area-inset-top);
       font-family: var(--sans);
       font-size: 0.92rem;
+      border-right: 1px solid var(--rule) !important;
     }
     .sidebar .app-name {
       font-family: var(--serif);
@@ -130,6 +161,8 @@
       padding: 1rem 1rem 0.35rem;
     }
     .sidebar .app-name-link { color: var(--ink) !important; }
+    .sidebar ul li a { color: var(--ink) !important; }
+    .sidebar ul li.active > a { color: var(--theme-color) !important; }
     .sidebar-toggle {
       background: color-mix(in srgb, var(--paper) 88%, transparent) !important;
       backdrop-filter: blur(8px);
@@ -139,66 +172,126 @@
       bottom: calc(1rem + env(safe-area-inset-bottom)) !important;
       left: calc(0.75rem + env(safe-area-inset-left)) !important;
       border-radius: 999px !important;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.14);
       display: flex !important;
       align-items: center;
       justify-content: center;
+      z-index: 30;
     }
     .sidebar-toggle span { background-color: var(--ink) !important; }
 
-    .search {
-      margin: 0 0.75rem 0.75rem !important;
-      padding: 0 !important;
-      border: none !important;
-    }
+    .search { margin: 0 0.75rem 0.75rem !important; padding: 0 !important; border: none !important; }
     .search input {
       font-family: var(--sans) !important;
-      font-size: 16px !important; /* prevent iOS zoom */
+      font-size: 16px !important;
       border-radius: 10px !important;
       padding: 0.7rem 0.85rem !important;
       background: var(--paper) !important;
-      border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent) !important;
+      color: var(--ink) !important;
+      border: 1px solid var(--rule) !important;
     }
 
-    /* Hide GitHub corner / noisy bits on small screens */
+    /* Theme control — floating EPUB toolbar */
+    #theme-bar {
+      position: fixed;
+      z-index: 40;
+      top: calc(0.65rem + env(safe-area-inset-top));
+      right: calc(0.65rem + env(safe-area-inset-right));
+      display: flex;
+      gap: 0.35rem;
+      padding: 0.3rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--paper) 86%, transparent);
+      border: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      font-family: var(--sans);
+    }
+    #theme-bar button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 36px;
+    }
+    #theme-bar button[aria-pressed="true"] {
+      background: var(--chrome);
+      color: var(--ink);
+    }
+
     @media (max-width: 768px) {
       .github-corner { display: none !important; }
-      main { padding-left: 0 !important; }
-      .content { left: 0 !important; }
-      /* Slightly larger tap targets in nav */
-      .sidebar ul li a {
-        padding: 0.45rem 0 !important;
-        line-height: 1.35 !important;
-      }
-      /* Comfortable single-column reading */
-      .markdown-section {
-        max-width: 100% !important;
-      }
+      .markdown-section { max-width: 100% !important; }
+      .markdown-section p { text-align: left; } /* justify can look uneven on narrow phones */
+      .sidebar ul li a { padding: 0.45rem 0 !important; }
     }
 
-    /* Wide screens still feel like a book, not a wall of text */
     @media (min-width: 769px) {
-      .markdown-section {
-        padding-top: 2rem !important;
-        padding-bottom: 4rem !important;
-      }
+      .markdown-section { padding-top: 2.25rem !important; padding-bottom: 4.5rem !important; }
     }
 
-    /* Progress feel: soft top edge */
-    .content::before {
-      content: "";
-      position: sticky;
-      top: 0;
-      display: block;
-      height: env(safe-area-inset-top);
-      background: var(--paper);
-      z-index: 5;
+    /* Adaptive density when user prefers reduced motion / larger text */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
+  <div id="theme-bar" role="group" aria-label="Reading theme">
+    <button type="button" data-theme="auto" title="Match system">Auto</button>
+    <button type="button" data-theme="light" title="Paper light">Day</button>
+    <button type="button" data-theme="dark" title="Night">Night</button>
+  </div>
   <div id="app">Opening the book…</div>
   <script>
+    (function () {
+      var KEY = 'neville-wiki-theme';
+      var root = document.documentElement;
+      var meta = document.getElementById('meta-theme-color');
+      var mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function systemDark() { return mql.matches; }
+      function applySystemAttr() {
+        root.setAttribute('data-system', systemDark() ? 'dark' : 'light');
+      }
+      function paintMeta(theme) {
+        var dark = theme === 'dark' || (theme === 'auto' && systemDark());
+        if (meta) meta.setAttribute('content', dark ? '#1a1814' : '#f4efe6');
+      }
+      function setTheme(theme) {
+        if (!['auto', 'light', 'dark'].includes(theme)) theme = 'auto';
+        root.setAttribute('data-theme', theme);
+        try { localStorage.setItem(KEY, theme); } catch (e) {}
+        paintMeta(theme);
+        document.querySelectorAll('#theme-bar button').forEach(function (btn) {
+          btn.setAttribute('aria-pressed', btn.getAttribute('data-theme') === theme ? 'true' : 'false');
+        });
+      }
+
+      applySystemAttr();
+      var saved = 'auto';
+      try { saved = localStorage.getItem(KEY) || 'auto'; } catch (e) {}
+      setTheme(saved);
+
+      document.getElementById('theme-bar').addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-theme]');
+        if (!btn) return;
+        setTheme(btn.getAttribute('data-theme'));
+      });
+      mql.addEventListener('change', function () {
+        applySystemAttr();
+        paintMeta(root.getAttribute('data-theme') || 'auto');
+      });
+    })();
+
     window.$docsify = {
       name: 'Neville Goddard',
       repo: 'ahmadpoorgholam/neville-goddard-wiki',
@@ -213,9 +306,9 @@
       homepage: 'README.md',
       relativePath: true,
       maxLevel: 3,
-      topMargin: 24,
+      topMargin: 48,
       themeColor: '#8a6a1f',
-    }
+    };
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
