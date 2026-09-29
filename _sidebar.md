@@ -1,4 +1,5 @@
 - [Home](/)
+- [Audio lectures](AUDIO.md)
 - [Sources & notes](REPORT.md)
 - Books
   - [At Your Command](books/at-your-command.md)

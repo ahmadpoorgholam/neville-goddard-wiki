@@ -2,6 +2,11 @@
 _Generated 2026-09-29 02:33  (Europe/Amsterdam)._  
 Local markdown corpus of freely published / widely mirrored works. See [REPORT.md](REPORT.md) for sources, copyright notes, and repo survey.
 
+
+## Audio lectures (original voice)
+
+High-quality, non-AI listening links (Internet Archive, YouTube originals, careful Spotify notes): **[Audio lectures](AUDIO.md)**.
+
 ## Books
 | Title | Year | File |
 |---|---|---|
